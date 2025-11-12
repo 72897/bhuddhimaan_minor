@@ -21,7 +21,22 @@ const app = express();
 
 // ✅ initialize cloudinary
 
-app.use(cors());
+// ✅ CORS Configuration
+app.use(
+  cors({
+    origin: [
+      "https://bhuddhimaan-minor-git-main-72897s-projects.vercel.app", // your deployed frontend
+      "http://localhost:5173", // for local dev (Vite default)
+      "http://localhost:3000", // optional if testing manually
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true, // allow cookies/auth headers if needed
+  })
+);
+
+// Optional: respond quickly to preflight requests
+app.options("*", cors());
+
 app.use(express.json());
 
 // Conditionally enable Clerk only when keys are configured and look valid
